@@ -1,0 +1,2477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pediatric Dentistry Exam 3 — Practice Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0c0e14;
+    --surface: #13151f;
+    --surface2: #1a1d2b;
+    --surface3: #20243a;
+    --border: #272b40;
+    --border2: #333858;
+    --accent: #6ee7b7;
+    --accent2: #818cf8;
+    --accent3: #fb923c;
+    --correct: #34d399;
+    --wrong: #f87171;
+    --text: #e2e8f8;
+    --muted: #6b7494;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  .progress-wrap {
+    height: 2px;
+    background: var(--border);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 300;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    backdrop-filter: blur(8px);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .header-left h1 {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .header-left .subtitle {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.05em;
+  }
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .score-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .score-pill span { color: var(--accent); font-weight: 500; }
+  .reset-btn-header {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .reset-btn-header:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 56px 0 22px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-num {
+    font-family: var(--display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--bg);
+    background: var(--accent2);
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 12px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .q-card:hover { border-color: var(--border2); }
+  .q-card.answered-correct {
+    border-color: rgba(52,211,153,0.45);
+    box-shadow: 0 0 0 1px rgba(52,211,153,0.12) inset;
+  }
+  .q-card.answered-wrong {
+    border-color: rgba(248,113,113,0.45);
+    box-shadow: 0 0 0 1px rgba(248,113,113,0.1) inset;
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    padding: 2px 9px;
+    border-radius: 5px;
+  }
+
+  .q-text {
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--text);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 7px; }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.87rem;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+  .opt:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(110,231,183,0.06);
+  }
+  .opt:disabled { cursor: default; }
+
+  .opt-letter {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--surface3);
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.15s;
+  }
+
+  .opt.correct-ans { border-color: var(--correct) !important; background: rgba(52,211,153,0.1) !important; }
+  .opt.correct-ans .opt-letter { background: var(--correct); color: #0c0e14; }
+  .opt.wrong-ans { border-color: var(--wrong) !important; background: rgba(248,113,113,0.09) !important; }
+  .opt.wrong-ans .opt-letter { background: var(--wrong); color: #0c0e14; }
+  .opt.reveal-correct { border-color: rgba(52,211,153,0.35) !important; background: rgba(52,211,153,0.05) !important; }
+  .opt.reveal-correct .opt-letter { color: var(--correct); background: rgba(52,211,153,0.15); }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: rgba(52,211,153,0.09); border: 1px solid rgba(52,211,153,0.28); color: #86efcb; }
+  .feedback.wrong-fb { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.24); color: #fca5a5; }
+  .feedback strong { font-weight: 500; }
+
+
+  .q-tag {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--accent3);
+    border: 1px solid rgba(251,146,60,0.35);
+    padding: 2px 9px;
+    border-radius: 5px;
+  }
+  .opt.multi .opt-letter { border-radius: 50%; }
+  .opt.selected { border-color: var(--accent2); background: rgba(129,140,248,0.1); }
+  .opt.selected .opt-letter { background: var(--accent2); color: #0c0e14; }
+  .check-btn {
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .check-btn:disabled { opacity: 0.4; cursor: default; }
+  .check-btn:not(:disabled):hover { background: rgba(129,140,248,0.1); }
+  .review-bar { margin-top: 40px; text-align: center; }
+  .review-btn {
+    background: transparent;
+    border: 1px solid var(--wrong);
+    color: var(--wrong);
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 360px;
+  }
+  .review-btn:not(:disabled):hover { background: rgba(248,113,113,0.08); }
+  .review-btn:disabled { opacity: 0.35; cursor: default; }
+  .review-note { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-top: 8px; }
+  .review-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    background: rgba(248,113,113,0.07);
+    border: 1px solid rgba(248,113,113,0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-family: var(--mono); font-size: 0.78rem; color: #fca5a5;
+  }
+
+  .type-row { display: flex; gap: 8px; }
+  .type-input {
+    flex: 1; min-width: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    outline: none;
+  }
+  .type-input:focus { border-color: var(--accent); }
+  .type-input.in-correct { border-color: var(--correct); background: rgba(52,211,153,0.08); }
+  .type-input.in-wrong { border-color: var(--wrong); background: rgba(248,113,113,0.07); color: #fca5a5; text-decoration: line-through; }
+  .type-input.in-blank { border-color: var(--wrong); }
+  .type-row .check-btn { margin-top: 0; }
+  .link-btn {
+    background: none; border: none; padding: 0; margin-top: 10px;
+    color: var(--muted); font-family: var(--mono); font-size: 0.72rem; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .link-btn:hover { color: var(--text); }
+  .override-btn {
+    margin-left: 8px; background: transparent; border: 1px solid rgba(252,165,165,0.5);
+    color: #fca5a5; border-radius: 6px; padding: 2px 9px; font-family: var(--mono); font-size: 0.7rem; cursor: pointer;
+  }
+  .override-btn:hover { border-color: var(--correct); color: var(--correct); }
+
+
+  .mode-toggle {
+    display: inline-flex;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px;
+  }
+  .mode-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .mode-btn.active { background: var(--accent); color: #0c0e14; font-weight: 500; }
+  .mode-btn:not(.active):hover { color: var(--text); }
+
+  .type-hint { font-family: var(--mono); font-size: 0.72rem; color: var(--accent3); margin-bottom: 8px; }
+
+
+  /* Only the score row stays pinned while scrolling */
+  header { position: relative; top: auto; z-index: auto; backdrop-filter: none; border-bottom: none; padding-bottom: 12px; }
+  .score-bar.sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 36px;
+    justify-content: flex-start;
+  }
+  .sticky-bar .bar-spacer { flex: 1; }
+  @media (max-width: 600px) {
+    .score-bar.sticky-bar { padding: 8px 16px; gap: 6px; }
+    .sticky-bar .bar-spacer { display: none; }
+    .sticky-bar .score-pill, .sticky-bar .reset-btn-header { font-size: 0.7rem; padding: 4px 11px; }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    .container { padding: 32px 14px 80px; }
+    .q-card { padding: 16px 16px; }
+    .header-left h1 { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+<header>
+  <div class="header-left">
+    <h1>Pediatric Dentistry — Exam 3 Practice Test</h1>
+    <div class="subtitle">Child Development · Behavior Guidance · Dental Anomalies · Oral Pathology · Local Anesthesia</div>
+  </div>
+  <div class="header-tools">
+    <div class="mode-toggle" role="group" aria-label="Answer format">
+      <button class="mode-btn" data-mode="mc" onclick="setMode('mc')">Multiple choice</button>
+      <button class="mode-btn" data-mode="typed" onclick="setMode('typed')">Type answer</button>
+    </div>
+  </div>
+</header>
+<div class="score-bar sticky-bar">
+    <div class="score-pill">Answered: <span id="answeredCount">0</span> / <span id="totalCount">0</span></div>
+    <div class="score-pill">Score: <span id="scoreCount">0</span> correct</div>
+    <span class="bar-spacer"></span>
+    <button class="reset-btn-header" onclick="resetAll()">↺ Reset</button>
+    <button class="reset-btn-header" onclick="shuffleAll()">⇄ Reset &amp; Shuffle</button>
+</div>
+
+<div class="container" id="examContainer"></div>
+
+<script>
+const sections = [
+ {
+  "label": "Child Development & Behavioral Theories",
+  "questions": [
+   {
+    "id": "q001",
+    "text": "Which of these are Piaget's cognitive stages?",
+    "options": [
+     "Intra-operational",
+     "Concrete operational",
+     "Preoperational",
+     "Formal operational",
+     "Sensorimotor",
+     "Post-operational"
+    ],
+    "correct": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "sensori"
+      ],
+      [
+       "preop",
+       "pre op"
+      ],
+      [
+       "concrete"
+      ],
+      [
+       "formal"
+      ]
+     ],
+     "not": [
+      "intra",
+      "post op",
+      "postop"
+     ],
+     "fuzzy": true,
+     "show": "Sensorimotor, Preoperational, Concrete operational, Formal operational"
+    }
+   },
+   {
+    "id": "q002",
+    "text": "Which of these is NOT one of Piaget's cognitive stages?",
+    "options": [
+     "Sensorimotor",
+     "Preoperational",
+     "Formal operational",
+     "Intra-operational"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "intra"
+      ]
+     ],
+     "show": "Intra-operational",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q003",
+    "text": "Attributing life to inanimate objects is called:",
+    "options": [
+     "Egocentrism",
+     "Conservation",
+     "Centration",
+     "Animism"
+    ],
+    "correct": 3,
+    "typed": {
+     "aliases": [
+      "animism"
+     ],
+     "fuzzy": true,
+     "show": "Animism"
+    }
+   },
+   {
+    "id": "q004",
+    "text": "Animism occurs during which Piaget stage?",
+    "options": [
+     "Sensorimotor",
+     "Concrete operational",
+     "Preoperational",
+     "Formal operational"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "preop",
+       "pre op"
+      ]
+     ],
+     "show": "Preoperational",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q005",
+    "text": "Reversible thinking is characteristic of which Piaget stage?",
+    "options": [
+     "Concrete operational",
+     "Preoperational",
+     "Sensorimotor",
+     "Formal operational"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "concrete"
+      ]
+     ],
+     "show": "Concrete operational",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q006",
+    "text": "Animism declines during which Piaget stage?",
+    "options": [
+     "Concrete operational",
+     "Preoperational",
+     "Sensorimotor",
+     "Intra-operational"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "concrete"
+      ]
+     ],
+     "show": "Concrete operational",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q007",
+    "text": "Per Gesell, which age is the \"here and now\" age?",
+    "options": [
+     "2 years old",
+     "4 years old",
+     "3 years old",
+     "5 years old"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "3",
+       "three"
+      ]
+     ],
+     "not": [
+      "2",
+      "4",
+      "5"
+     ],
+     "show": "3 years old",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q008",
+    "text": "Per Gesell, a 3-year-old has a vocabulary of about:",
+    "options": [
+     "800 words",
+     "50 words",
+     "200 words",
+     "2,000 words"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "800"
+      ]
+     ],
+     "show": "~800 words",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q009",
+    "text": "Per Gesell, compared with a younger toddler, a 3-year-old is:",
+    "options": [
+     "More egocentric",
+     "Less egocentric",
+     "Equally egocentric",
+     "Not yet aware of others at all"
+    ],
+    "correct": 1,
+    "typed": {
+     "keys": [
+      [
+       "less"
+      ]
+     ],
+     "not": [
+      "more",
+      "equal"
+     ],
+     "show": "Less egocentric",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q010",
+    "text": "Per Gesell, a 3-year-old's imagination is:",
+    "options": [
+     "Absent",
+     "Lively",
+     "Limited to copying adults",
+     "Fully replaced by logical thinking"
+    ],
+    "correct": 1,
+    "typed": {
+     "keys": [
+      [
+       "lively",
+       "active",
+       "vivid"
+      ]
+     ],
+     "show": "Lively",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q011",
+    "text": "Per Gesell, a 3-year-old is highly talkative:",
+    "options": [
+     "Only with parents",
+     "Only when asked a question",
+     "Only with other children",
+     "Regardless of the listener"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "regardless",
+       "anyone",
+       "no matter",
+       "whether"
+      ]
+     ],
+     "show": "Regardless of the listener",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q012",
+    "text": "Which describe a 3-year-old (Gesell)?",
+    "options": [
+     "Aware of rules and respects authority",
+     "Less egocentric",
+     "~800-word vocabulary",
+     "Highly talkative regardless of the listener",
+     "\"Here and now\" age",
+     "Poised and self-confident",
+     "Lively imagination"
+    ],
+    "correct": [
+     1,
+     2,
+     3,
+     4,
+     6
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 5, separated by commas.",
+     "items": [
+      [
+       "egocentric"
+      ],
+      [
+       "imagin"
+      ],
+      [
+       "here",
+       "now"
+      ],
+      [
+       "800"
+      ],
+      [
+       "talk"
+      ]
+     ],
+     "not": [
+      "rule",
+      "authority",
+      "poise",
+      "confiden"
+     ],
+     "fuzzy": true,
+     "show": "Less egocentric, Lively imagination, \"Here and now\" age, ~800-word vocabulary, Highly talkative regardless of the listener"
+    }
+   },
+   {
+    "id": "q013",
+    "text": "Per Gesell, which age is aware of rules, respects authority, and is poised and self-confident?",
+    "options": [
+     "5 years old",
+     "2 years old",
+     "3 years old",
+     "4 years old"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "5",
+       "five"
+      ]
+     ],
+     "not": [
+      "2",
+      "3",
+      "4"
+     ],
+     "show": "5 years old",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q014",
+    "text": "Which describe a 5-year-old (Gesell)?",
+    "options": [
+     "\"Here and now\" age",
+     "Poised",
+     "Talkative regardless of the listener",
+     "Respects authority",
+     "Aware of rules",
+     "Self-confident"
+    ],
+    "correct": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "rule"
+      ],
+      [
+       "authority"
+      ],
+      [
+       "poise"
+      ],
+      [
+       "confiden"
+      ]
+     ],
+     "not": [
+      "here and now",
+      "talk"
+     ],
+     "fuzzy": true,
+     "show": "Aware of rules, Respects authority, Poised, Self-confident"
+    }
+   },
+   {
+    "id": "q015",
+    "text": "In classical conditioning, the pain associated with an injection acts as the:",
+    "options": [
+     "Unconditioned stimulus",
+     "Conditioned stimulus",
+     "Conditioned response",
+     "Unconditioned response"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "unconditioned"
+      ],
+      [
+       "stimul"
+      ]
+     ],
+     "not": [
+      "response"
+     ],
+     "show": "Unconditioned stimulus",
+     "fuzzy": true
+    }
+   }
+  ]
+ },
+ {
+  "label": "Behavioral Guidance & Operant Conditioning",
+  "questions": [
+   {
+    "id": "q016",
+    "text": "Increasing the probability of a behavior relies on:",
+    "options": [
+     "Positive reinforcement and punishment",
+     "Punishment and extinction",
+     "Negative reinforcement and extinction",
+     "Positive and negative reinforcement"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "positive"
+      ],
+      [
+       "negative"
+      ],
+      [
+       "reinforce"
+      ]
+     ],
+     "not": [
+      "punish",
+      "extinct"
+     ],
+     "show": "Positive and negative reinforcement",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q017",
+    "text": "Removing an aversive (unpleasant) stimulus to increase a behavior is:",
+    "options": [
+     "Positive reinforcement",
+     "Punishment",
+     "Extinction",
+     "Negative reinforcement"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "negative"
+      ],
+      [
+       "reinforce"
+      ]
+     ],
+     "not": [
+      "positive",
+      "punish"
+     ],
+     "show": "Negative reinforcement (withdrawal of an unpleasant stimulus)",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q018",
+    "text": "True or false: crying is the most common way children express fear.",
+    "options": [
+     "False",
+     "True",
+     "Only under age 2",
+     "Only in the dental setting"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "true",
+      "t"
+     ],
+     "fuzzy": false,
+     "show": "True"
+    }
+   },
+   {
+    "id": "q019",
+    "text": "Which are types of crying?",
+    "options": [
+     "Tired",
+     "Compensatory",
+     "Frightened/fearful",
+     "Hungry",
+     "Obstinate",
+     "Hurt/painful"
+    ],
+    "correct": [
+     1,
+     2,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "hurt",
+       "pain"
+      ],
+      [
+       "fright",
+       "fear"
+      ],
+      [
+       "obstinate"
+      ],
+      [
+       "compensat"
+      ]
+     ],
+     "not": [
+      "hungry",
+      "tired"
+     ],
+     "fuzzy": true,
+     "show": "Hurt/painful, Frightened/fearful, Obstinate, Compensatory"
+    }
+   },
+   {
+    "id": "q020",
+    "text": "A fearful cry is managed with:",
+    "options": [
+     "Positive reinforcement",
+     "Tell-Show-Do",
+     "Ignoring the child",
+     "Voice control",
+     "Distraction",
+     "Identifying the source"
+    ],
+    "correct": [
+     0,
+     1,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "tell",
+       "tsd"
+      ],
+      [
+       "distract"
+      ],
+      [
+       "positive",
+       "reinforce",
+       "praise"
+      ],
+      [
+       "source",
+       "identify",
+       "cause"
+      ]
+     ],
+     "not": [
+      "voice",
+      "ignor"
+     ],
+     "fuzzy": true,
+     "show": "Tell-Show-Do, Distraction, Positive reinforcement, Identifying the source"
+    }
+   },
+   {
+    "id": "q021",
+    "text": "Is voice control an appropriate primary technique for a purely fearful cry?",
+    "options": [
+     "Yes",
+     "Only for children over 5",
+     "Only with the parent present",
+     "No"
+    ],
+    "correct": 3,
+    "typed": {
+     "aliases": [
+      "no",
+      "not appropriate",
+      "never"
+     ],
+     "fuzzy": false,
+     "show": "No"
+    }
+   },
+   {
+    "id": "q022",
+    "text": "An obstinate cry is managed with:",
+    "options": [
+     "Distraction only",
+     "Firmness and voice control",
+     "Tell-Show-Do only",
+     "Ignoring the child"
+    ],
+    "correct": 1,
+    "typed": {
+     "keys": [
+      [
+       "firm"
+      ],
+      [
+       "voice"
+      ]
+     ],
+     "show": "Firmness and voice control",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q023",
+    "text": "Voice control can include:",
+    "options": [
+     "Gaining attention",
+     "Removing the parent from the room",
+     "Averting negative behavior",
+     "Physical restraint",
+     "Changes in tone and volume",
+     "Establishing authority"
+    ],
+    "correct": [
+     0,
+     2,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "tone",
+       "volume"
+      ],
+      [
+       "authority"
+      ],
+      [
+       "avert",
+       "negative behav"
+      ],
+      [
+       "attention"
+      ]
+     ],
+     "not": [
+      "restrain",
+      "parent"
+     ],
+     "fuzzy": true,
+     "show": "Changes in tone and volume, Establishing authority, Averting negative behavior, Gaining attention"
+    }
+   },
+   {
+    "id": "q024",
+    "text": "Parents can assist during appointments for:",
+    "options": [
+     "Children with physical, medical, or developmental differences",
+     "Operating the suction",
+     "Preventive counseling",
+     "Administering local anesthesia",
+     "Pre-cooperative children"
+    ],
+    "correct": [
+     0,
+     2,
+     4
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 3, separated by commas.",
+     "items": [
+      [
+       "precoop",
+       "pre coop",
+       "cooperat"
+      ],
+      [
+       "prevent",
+       "counsel"
+      ],
+      [
+       "physical",
+       "medical",
+       "developmental",
+       "differen"
+      ]
+     ],
+     "not": [
+      "anesth",
+      "suction"
+     ],
+     "fuzzy": true,
+     "show": "Pre-cooperative children, Preventive counseling, Children with physical, medical, or developmental differences"
+    }
+   },
+   {
+    "id": "q025",
+    "text": "Which ambiguous minimizing words should you avoid when explaining treatment to child patients?",
+    "options": [
+     "\"Sleepy juice\" and \"raincoat\"",
+     "\"Count\" and \"wiggle\"",
+     "\"Tooth tickler\" and \"Mr. Thirsty\"",
+     "\"Just\" and \"only\""
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "just"
+      ],
+      [
+       "only"
+      ]
+     ],
+     "show": "\"Just\" and \"only\"",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q026",
+    "text": "Which are examples of positive reinforcement?",
+    "options": [
+     "Smiling expressions",
+     "Voice control",
+     "Removal of an unpleasant stimulus",
+     "Verbal praise",
+     "Giving prizes"
+    ],
+    "correct": [
+     0,
+     3,
+     4
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 3, separated by commas.",
+     "items": [
+      [
+       "praise",
+       "verbal"
+      ],
+      [
+       "smil"
+      ],
+      [
+       "prize",
+       "reward",
+       "toy",
+       "sticker"
+      ]
+     ],
+     "not": [
+      "remov",
+      "unpleasant",
+      "voice"
+     ],
+     "fuzzy": true,
+     "show": "Verbal praise, Smiling expressions, Giving prizes"
+    }
+   },
+   {
+    "id": "q027",
+    "text": "Communicative management includes:",
+    "options": [
+     "Voice control",
+     "Nitrous oxide/oxygen",
+     "Positive reinforcement",
+     "Protective stabilization",
+     "Tell-Show-Do",
+     "Distraction"
+    ],
+    "correct": [
+     0,
+     2,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "positive",
+       "reinforce"
+      ],
+      [
+       "tell",
+       "tsd"
+      ],
+      [
+       "distract"
+      ],
+      [
+       "voice"
+      ]
+     ],
+     "not": [
+      "stabiliz",
+      "nitrous"
+     ],
+     "fuzzy": true,
+     "show": "Positive reinforcement, Tell-Show-Do, Distraction, Voice control"
+    }
+   },
+   {
+    "id": "q028",
+    "text": "Informed consent must include:",
+    "options": [
+     "Risks/benefits of the procedure",
+     "A guaranteed outcome",
+     "The practitioner's malpractice history",
+     "Risks of no treatment",
+     "Alternatives"
+    ],
+    "correct": [
+     0,
+     3,
+     4
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 3, separated by commas.",
+     "items": [
+      [
+       "benefit",
+       "risks of the procedure",
+       "risk benefit"
+      ],
+      [
+       "alternative"
+      ],
+      [
+       "no treatment",
+       "no tx",
+       "not treating",
+       "without treatment"
+      ]
+     ],
+     "not": [
+      "guarant",
+      "malpractice"
+     ],
+     "fuzzy": true,
+     "show": "Risks/benefits of the procedure, Alternatives, Risks of no treatment"
+    }
+   },
+   {
+    "id": "q029",
+    "text": "Dental fear is influenced by:",
+    "options": [
+     "Parental anxiety",
+     "Peer influence",
+     "Prior medical/dental experiences",
+     "Awareness of dental problems",
+     "Eye color",
+     "Handedness"
+    ],
+    "correct": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "parent"
+      ],
+      [
+       "peer"
+      ],
+      [
+       "prior",
+       "previous",
+       "past",
+       "experience"
+      ],
+      [
+       "aware",
+       "problem"
+      ]
+     ],
+     "not": [
+      "eye",
+      "hand"
+     ],
+     "fuzzy": true,
+     "show": "Parental anxiety, Peer influence, Prior medical/dental experiences, Awareness of dental problems"
+    }
+   }
+  ]
+ },
+ {
+  "label": "Dental Anomalies & Developmental Disturbances",
+  "questions": [
+   {
+    "id": "q030",
+    "text": "Congenital absence of 8 permanent teeth (excluding 3rd molars) is termed:",
+    "options": [
+     "Hypodontia",
+     "Oligodontia",
+     "Anodontia",
+     "Hyperdontia"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "oligodontia"
+     ],
+     "fuzzy": true,
+     "show": "Oligodontia"
+    }
+   },
+   {
+    "id": "q031",
+    "text": "Most commonly missing permanent teeth (excluding 3rd molars):",
+    "options": [
+     "Mandibular 2nd premolars",
+     "Maxillary lateral incisors",
+     "Maxillary 2nd premolars",
+     "Mandibular central incisors"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "mand",
+       "lower"
+      ],
+      [
+       "2nd",
+       "second"
+      ],
+      [
+       "premolar",
+       "bicuspid",
+       "pm"
+      ]
+     ],
+     "not": [
+      "max",
+      "upper",
+      "lateral",
+      "central"
+     ],
+     "show": "Mandibular 2nd premolars",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q032",
+    "text": "If a primary lateral incisor is congenitally missing, the permanent lateral incisor:",
+    "options": [
+     "Is unaffected",
+     "Will likely erupt early",
+     "Will likely be duplicated (supernumerary)",
+     "Will also likely be missing"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "missing",
+       "absent"
+      ]
+     ],
+     "not": [
+      "unaffected",
+      "early",
+      "supernumer",
+      "duplic"
+     ],
+     "show": "Will also likely be missing",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q033",
+    "text": "Congenitally missing teeth result from a disturbance in which stage?",
+    "options": [
+     "Histodifferentiation",
+     "Morphodifferentiation",
+     "Apposition",
+     "Initiation"
+    ],
+    "correct": 3,
+    "typed": {
+     "aliases": [
+      "initiation"
+     ],
+     "fuzzy": true,
+     "show": "Initiation"
+    }
+   },
+   {
+    "id": "q034",
+    "text": "Union of dentin between two developing teeth, with separate pulp chambers/canals:",
+    "options": [
+     "Fusion",
+     "Gemination",
+     "Concrescence",
+     "Dens invaginatus"
+    ],
+    "correct": 0,
+    "typed": {
+     "aliases": [
+      "fusion"
+     ],
+     "fuzzy": true,
+     "show": "Fusion"
+    }
+   },
+   {
+    "id": "q035",
+    "text": "Bifid crown with a single root and pulp chamber:",
+    "options": [
+     "Fusion",
+     "Concrescence",
+     "Gemination",
+     "Taurodontism"
+    ],
+    "correct": 2,
+    "typed": {
+     "aliases": [
+      "gemination"
+     ],
+     "fuzzy": true,
+     "show": "Gemination"
+    }
+   },
+   {
+    "id": "q036",
+    "text": "Bulbous crowns, soft abrading dentin, obliterated pulp canals, and short roots describe:",
+    "options": [
+     "Dentinogenesis imperfecta",
+     "Amelogenesis imperfecta",
+     "Taurodontism",
+     "Regional odontodysplasia"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "dentinogenesis",
+       "di"
+      ]
+     ],
+     "not": [
+      "amelo"
+     ],
+     "show": "Dentinogenesis imperfecta",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q037",
+    "text": "Which are features of dentinogenesis imperfecta?",
+    "options": [
+     "Long roots",
+     "Short roots",
+     "Bulbous crowns",
+     "Enlarged pulp chambers",
+     "Soft abrading dentin",
+     "Obliterated pulp canals"
+    ],
+    "correct": [
+     1,
+     2,
+     4,
+     5
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 4, separated by commas.",
+     "items": [
+      [
+       "bulbous"
+      ],
+      [
+       "soft",
+       "abrad"
+      ],
+      [
+       "obliterat"
+      ],
+      [
+       "short"
+      ]
+     ],
+     "not": [
+      "enlarg",
+      "long"
+     ],
+     "fuzzy": true,
+     "show": "Bulbous crowns, Soft abrading dentin, Obliterated pulp canals, Short roots"
+    }
+   },
+   {
+    "id": "q038",
+    "text": "Inversion or enfolding of enamel into the crown, sometimes extending past the CEJ:",
+    "options": [
+     "Dens evaginatus",
+     "Taurodontism",
+     "Dens invaginatus",
+     "Gemination"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "invaginat",
+       "dens in dente"
+      ]
+     ],
+     "not": [
+      "evaginat"
+     ],
+     "show": "Dens invaginatus",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q039",
+    "text": "Hypoplastic teeth represent a ___ defect of enamel.",
+    "options": [
+     "Qualitative",
+     "Both quantitative and qualitative",
+     "Quantitative",
+     "Neither (it's a dentin defect)"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "quantitativ"
+      ]
+     ],
+     "not": [
+      "qualitativ",
+      "both",
+      "neither"
+     ],
+     "show": "Quantitative",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q040",
+    "text": "Which primary teeth are most commonly ankylosed?",
+    "options": [
+     "Maxillary first molars",
+     "Mandibular first molars",
+     "Mandibular second molars",
+     "Maxillary canines"
+    ],
+    "correct": 1,
+    "typed": {
+     "keys": [
+      [
+       "mand",
+       "lower"
+      ],
+      [
+       "first",
+       "1st"
+      ],
+      [
+       "molar"
+      ]
+     ],
+     "not": [
+      "max",
+      "upper",
+      "second",
+      "2nd",
+      "canine"
+     ],
+     "show": "Primary mandibular first molars",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q041",
+    "text": "About what fraction of ectopically erupting permanent molars self-correct and can be monitored?",
+    "options": [
+     "1/4",
+     "2/3",
+     "1/3",
+     "9/10"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "2/3",
+      "two thirds",
+      "2 3",
+      "66%",
+      "67%",
+      "about 2/3",
+      "~2/3"
+     ],
+     "fuzzy": false,
+     "show": "About 2/3"
+    }
+   }
+  ]
+ },
+ {
+  "label": "Oral Pathology & Soft Tissue Conditions",
+  "questions": [
+   {
+    "id": "q042",
+    "text": "White bumps on the buccal and lingual alveolar ridges of an infant are:",
+    "options": [
+     "Epstein pearls",
+     "Natal teeth",
+     "Eruption cysts",
+     "Bohn nodules"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "bohn"
+      ]
+     ],
+     "show": "Bohn nodules",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q043",
+    "text": "A bifid uvula is a marker for a possible:",
+    "options": [
+     "Ankyloglossia",
+     "Macroglossia",
+     "Submucosal palatal cleft",
+     "Torus palatinus"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "submucos",
+       "cleft"
+      ]
+     ],
+     "show": "Submucosal (palatal) cleft",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q044",
+    "text": "The most common ulcerative disease of the oral mucosa:",
+    "options": [
+     "Recurrent aphthous stomatitis",
+     "Primary herpetic gingivostomatitis",
+     "Hand, foot, and mouth disease",
+     "Herpangina"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "aphth",
+       "ras",
+       "canker"
+      ]
+     ],
+     "show": "Recurrent aphthous stomatitis",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q045",
+    "text": "A common benign soft tissue neoplasm caused by chronic irritation:",
+    "options": [
+     "Mucocele",
+     "Fibroma",
+     "Papilloma",
+     "Ranula"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "fibroma",
+      "irritation fibroma",
+      "traumatic fibroma"
+     ],
+     "fuzzy": true,
+     "show": "Fibroma"
+    }
+   },
+   {
+    "id": "q046",
+    "text": "A mucocele is most commonly seen on the:",
+    "options": [
+     "Upper lip",
+     "Floor of the mouth",
+     "Lower lip",
+     "Tip of the tongue"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "lower",
+       "mandibular"
+      ],
+      [
+       "lip"
+      ]
+     ],
+     "not": [
+      "upper"
+     ],
+     "show": "Lower lip",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q047",
+    "text": "Primary gingivostomatitis is caused by:",
+    "options": [
+     "Coxsackievirus",
+     "Candida albicans",
+     "Herpes simplex virus",
+     "Varicella-zoster virus"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "herpes simplex",
+       "hsv",
+       "herpes"
+      ]
+     ],
+     "not": [
+      "zoster",
+      "varicella"
+     ],
+     "show": "Herpes simplex virus (HSV)",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q048",
+    "text": "Primary gingivostomatitis presents lesions on:",
+    "options": [
+     "Both keratinized and non-keratinized tissues",
+     "Keratinized tissue only",
+     "Non-keratinized tissue only",
+     "The lips only"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "both",
+       "and"
+      ]
+     ],
+     "not": [
+      "only"
+     ],
+     "ttext": "Primary gingivostomatitis lesions appear on keratinized tissue, non-keratinized tissue, or both?",
+     "show": "Both keratinized and non-keratinized",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q049",
+    "text": "Children's gingiva appears redder because of:",
+    "options": [
+     "Increased keratinization",
+     "Thicker epithelium",
+     "Greater melanin pigmentation",
+     "Increased vascularity"
+    ],
+    "correct": 3,
+    "typed": {
+     "keys": [
+      [
+       "vascular",
+       "blood"
+      ]
+     ],
+     "show": "Increased vascularity",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q050",
+    "text": "Mucogingival deformities are most commonly found at the:",
+    "options": [
+     "Maxillary central incisors",
+     "Mandibular canines",
+     "Mandibular central incisors",
+     "Maxillary first molars"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "mand",
+       "lower"
+      ],
+      [
+       "central",
+       "incisor"
+      ]
+     ],
+     "not": [
+      "max",
+      "upper",
+      "canine",
+      "molar"
+     ],
+     "show": "Mandibular central incisors",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q051",
+    "text": "True or false: in localized aggressive periodontitis affecting the primary dentition, the incisors are most commonly affected.",
+    "options": [
+     "True",
+     "Only in the maxilla",
+     "False",
+     "Only in the mandible"
+    ],
+    "correct": 2,
+    "typed": {
+     "aliases": [
+      "false",
+      "f"
+     ],
+     "fuzzy": false,
+     "show": "False"
+    }
+   }
+  ]
+ },
+ {
+  "label": "Local Anesthesia in Pediatric Dentistry",
+  "questions": [
+   {
+    "id": "q052",
+    "text": "In a 4-year-old (primary dentition), the mandibular foramen is located:",
+    "options": [
+     "Slightly above the occlusal plane",
+     "Slightly below the occlusal plane",
+     "Well above the occlusal plane",
+     "At the level of the gingival margin"
+    ],
+    "correct": 1,
+    "typed": {
+     "keys": [
+      [
+       "below",
+       "lower",
+       "under"
+      ]
+     ],
+     "not": [
+      "above",
+      "gingival"
+     ],
+     "show": "Slightly below the occlusal plane",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q053",
+    "text": "Local infiltration for a maxillary second primary molar: insert the needle to a depth approximating the:",
+    "options": [
+     "Root apices",
+     "Gingival margin",
+     "Furcation",
+     "Alveolar crest"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "apex",
+       "apic",
+       "apices"
+      ]
+     ],
+     "show": "Root apices",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q054",
+    "text": "In a 4-year-old, the inferior alveolar nerve block is given ___ than in adults.",
+    "options": [
+     "Slightly lower and more posterior",
+     "Higher and more anterior",
+     "Higher and more posterior",
+     "Lower and more anterior"
+    ],
+    "correct": 0,
+    "typed": {
+     "keys": [
+      [
+       "lower",
+       "below",
+       "inferior"
+      ],
+      [
+       "posterior",
+       "back"
+      ]
+     ],
+     "not": [
+      "higher",
+      "anterior"
+     ],
+     "show": "Slightly lower and more posterior",
+     "fuzzy": true
+    }
+   },
+   {
+    "id": "q055",
+    "text": "Maximum dosage of 2% lidocaine with 1:100,000 epinephrine:",
+    "options": [
+     "1.0 mg/lb",
+     "2.0 mg/lb",
+     "3.0 mg/lb",
+     "4.4 mg/lb"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "2",
+      "2.0",
+      "2 mg/lb",
+      "2.0 mg/lb",
+      "2 mg per lb",
+      "2.0 mg per lb",
+      "2mg/lb"
+     ],
+     "fuzzy": false,
+     "show": "2.0 mg/lb"
+    }
+   },
+   {
+    "id": "q056",
+    "text": "How much does each standard carpule contain?",
+    "options": [
+     "1.0 ml",
+     "1.7 ml",
+     "2.0 ml",
+     "2.5 ml"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "1.7",
+      "1.7 ml",
+      "1.7ml",
+      "1.7 cc"
+     ],
+     "fuzzy": false,
+     "show": "1.7 ml"
+    }
+   },
+   {
+    "id": "q057",
+    "text": "Max dose of 2% lidocaine with 1:100,000 epi for a 35 lb, 4-year-old:",
+    "options": [
+     "1.0 carpule",
+     "3.0 carpules",
+     "4.0 carpules",
+     "2.0 carpules"
+    ],
+    "correct": 3,
+    "typed": {
+     "aliases": [
+      "2",
+      "2.0",
+      "2 carpules",
+      "2.0 carpules",
+      "two",
+      "two carpules"
+     ],
+     "fuzzy": false,
+     "show": "2.0 carpules"
+    }
+   },
+   {
+    "id": "q058",
+    "text": "Max dose (mg) of 2% lidocaine with 1:100,000 epi for a 56 lb, 8-year-old:",
+    "options": [
+     "56 mg",
+     "168 mg",
+     "112 mg",
+     "246 mg"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "112"
+      ]
+     ],
+     "fuzzy": false,
+     "show": "112 mg (56 lb × 2.0 mg/lb)"
+    }
+   },
+   {
+    "id": "q059",
+    "text": "True or false: articaine can safely be used in a 3-year-old pediatric patient.",
+    "options": [
+     "True",
+     "Only with epinephrine",
+     "False",
+     "Only for infiltration"
+    ],
+    "correct": 2,
+    "typed": {
+     "keys": [
+      [
+       "false",
+       "f",
+       "cannot",
+       "can not",
+       "can t"
+      ]
+     ],
+     "not": [
+      "true"
+     ],
+     "fuzzy": false,
+     "show": "False (it cannot)"
+    }
+   },
+   {
+    "id": "q060",
+    "text": "Which can be an EARLY sign of an adverse reaction to local anesthetic?",
+    "options": [
+     "Respiratory arrest",
+     "Dizziness",
+     "Unconsciousness",
+     "Cardiac arrest"
+    ],
+    "correct": 1,
+    "typed": {
+     "aliases": [
+      "dizziness",
+      "dizzy",
+      "lightheaded"
+     ],
+     "fuzzy": true,
+     "show": "Dizziness"
+    }
+   },
+   {
+    "id": "q061",
+    "text": "Local anesthesia complications can include:",
+    "options": [
+     "Allergic response",
+     "Toxic overdose",
+     "Paresthesia",
+     "Ankylosis",
+     "Fluorosis"
+    ],
+    "correct": [
+     0,
+     1,
+     2
+    ],
+    "multi": true,
+    "typed": {
+     "hint": "List all 3, separated by commas.",
+     "items": [
+      [
+       "allerg"
+      ],
+      [
+       "paresthes"
+      ],
+      [
+       "overdose",
+       "toxic"
+      ]
+     ],
+     "not": [
+      "ankyl",
+      "fluoros"
+     ],
+     "fuzzy": true,
+     "show": "Allergic response, Paresthesia, Toxic overdose"
+    }
+   }
+  ]
+ }
+];
+
+let mode = 'mc';
+try { if (localStorage.getItem('quizMode') === 'typed') mode = 'typed'; } catch (e) {}
+let view = sections;
+let fullView = sections;
+let reviewing = false;
+let missed = {};
+let answered = {};
+let selected = {};
+let scores = { correct: 0, total: 0 };
+const letters = ['A','B','C','D','E','F','G','H'];
+
+// ---------- typed-answer matching ----------
+function norm(s) {
+  return (' ' + s.toLowerCase() + ' ')
+    .replace(/[µμ]/g, 'u')
+    .replace(/[‐‑‒–—_\/-]/g, ' ')
+    .replace(/(\d),(\d{3})/g, '$1$2')
+    .replace(/(^|[^0-9])\.|\.(?=[^0-9]|$)/g, '$1 ')
+    .replace(/[^a-z0-9. ]/g, ' ')
+    .replace(/\b(the|a|an)\b/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+function squash(s) { return norm(s).replace(/\band\b/g, ' ').replace(/ /g, ''); }
+function lev(a, b) {
+  const m = a.length, n = b.length;
+  const d = Array.from({length: m + 1}, (_, i) => [i]);
+  for (let j = 1; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+    d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+  return d[m][n];
+}
+function hasTerm(text, term) {
+  const n = norm(text), k = norm(term);
+  if (!k) return false;
+  if ((' ' + n + ' ').includes(k.length <= 3 ? ' ' + k + ' ' : k)) return true;
+  if (k.length > 3 && n.replace(/ /g, '').includes(k.replace(/ /g, ''))) return true;
+  if (k.length >= 6 && !k.includes(' ')) return n.split(' ').some(w => lev(w, k) <= 1);
+  return false;
+}
+function termPos(text, term) {
+  const n = norm(text), k = norm(term);
+  const i = (' ' + n + ' ').indexOf(k.length <= 3 ? ' ' + k + ' ' : k);
+  if (i >= 0) return i;
+  if (k.length >= 6 && !k.includes(' ')) {
+    let pos = 0;
+    for (const w of n.split(' ')) { if (lev(w, k) <= 1) return pos + 1; pos += w.length + 1; }
+  }
+  return -1;
+}
+function hasNot(text, words) {
+  const ws = norm(text).split(' ');
+  return words.some(n => ws.some(w => w === n || (n.length >= 4 && w.startsWith(n))));
+}
+const FILLER = new Set(['', 'both', 'all', 'teeth', 'etc', 'also', 'or', 'with', 'of', 'primary', 'permanent', 'the']);
+function isCorrect(q, typed) {
+  const t = q.typed;
+  const s = squash(typed);
+  if (!s) return false;
+  if (t.not && hasNot(typed, t.not)) return false;
+  if (t.aliases) for (const a of t.aliases) {
+    const sa = squash(a);
+    if (s === sa || s.replace(/s$/, '') === sa.replace(/s$/, '')) return true;
+    if (t.fuzzy) {
+      const tol = sa.length >= 10 ? 2 : sa.length >= 5 ? 1 : 0;
+      if (tol && lev(s, sa) <= tol) return true;
+    }
+  }
+  if (t.keys && t.keys.every(group => group.some(k => hasTerm(typed, k)))) return true;
+  if (t.items) {
+    const pieces = typed.split(/,|;|\n|\band\b|&|\+|→|->|\bthen\b/i).map(p => p.trim()).filter(p => !FILLER.has(norm(p)));
+    // every piece must name one of the required items
+    if (!pieces.every(p => t.items.some(item => item.some(k => hasTerm(p, k))))) return false;
+    // every required item must be named
+    if (!t.items.every(item => item.some(k => hasTerm(typed, k)))) return false;
+    if (t.ordered) {
+      const pos = t.items.map(item => Math.min(...item.map(k => termPos(typed, k)).filter(i => i >= 0)));
+      for (let i = 1; i < pos.length; i++) if (!(pos[i] > pos[i-1])) return false;
+    }
+    return true;
+  }
+  return false;
+}
+
+// ---------- mode switch ----------
+function setMode(m) {
+  if (m === mode) return;
+  mode = m;
+  try { localStorage.setItem('quizMode', m); } catch (e) {}
+  syncModeButtons();
+  resetAll();
+}
+function syncModeButtons() {
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    const on = b.dataset.mode === mode;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on);
+  });
+}
+
+// ---------- rendering ----------
+function buildExam() {
+  const container = document.getElementById('examContainer');
+  container.innerHTML = '';
+  let totalQ = 0;
+
+  if (reviewing) {
+    const banner = document.createElement('div');
+    banner.className = 'review-banner';
+    banner.innerHTML = '<span>Reviewing your incorrect answers</span><button class="reset-btn-header" onclick="exitReview()">← Back to full test</button>';
+    container.appendChild(banner);
+  }
+
+  view.forEach((section, si) => {
+    const secDiv = document.createElement('div');
+    secDiv.className = 'section-label';
+    secDiv.innerHTML = `<span class="section-num">Set ${section.num || si + 1}</span><span class="section-title"></span><div class="section-line"></div>`;
+    secDiv.querySelector('.section-title').textContent = section.label;
+    container.appendChild(secDiv);
+
+    section.questions.forEach((q) => {
+      totalQ++;
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = 'card-' + q.id;
+      const tag = mode === 'mc' && q.multi ? '<span class="q-tag">Select all that apply</span>' : '';
+      card.innerHTML = `<div class="q-meta"><span class="q-num">Q${totalQ}</span>${tag}</div><div class="q-text"></div>`;
+      card.querySelector('.q-text').textContent = mode === 'typed' && q.typed.ttext ? q.typed.ttext : q.text;
+
+      if (mode === 'mc') {
+        const optWrap = document.createElement('div');
+        optWrap.className = 'options';
+        q.options.forEach((opt, oi) => {
+          const btn = document.createElement('button');
+          btn.className = 'opt' + (q.multi ? ' multi' : '');
+          btn.id = 'opt-' + q.id + '-' + oi;
+          btn.innerHTML = `<span class="opt-letter">${letters[oi]}</span><span></span>`;
+          btn.lastChild.textContent = opt;
+          btn.addEventListener('click', () => q.multi ? toggleOpt(q, oi) : answerQ(q, oi));
+          optWrap.appendChild(btn);
+        });
+        card.appendChild(optWrap);
+        if (q.multi) {
+          const check = document.createElement('button');
+          check.className = 'check-btn';
+          check.id = 'check-' + q.id;
+          check.textContent = 'Check answer';
+          check.disabled = true;
+          check.addEventListener('click', () => checkMulti(q));
+          card.appendChild(check);
+        }
+      } else {
+        const wrap = document.createElement('div');
+        wrap.innerHTML = (q.typed.hint ? `<div class="type-hint"></div>` : '') + `
+          <form class="type-row" autocomplete="off">
+            <input class="type-input" id="in-${q.id}" type="text" placeholder="Type your answer" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
+            <button class="check-btn" type="submit" id="check-${q.id}">Check</button>
+          </form>
+          <button class="link-btn" id="show-${q.id}" type="button">Show answer</button>`;
+        if (q.typed.hint) wrap.querySelector('.type-hint').textContent = q.typed.hint;
+        wrap.querySelector('form').addEventListener('submit', ev => { ev.preventDefault(); submitTyped(q); });
+        wrap.querySelector('.link-btn').addEventListener('click', () => revealQ(q));
+        card.appendChild(wrap);
+      }
+
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+      feedback.id = 'fb-' + q.id;
+      card.appendChild(feedback);
+      container.appendChild(card);
+    });
+  });
+
+  const bar = document.createElement('div');
+  bar.className = 'review-bar';
+  bar.innerHTML = '<button class="review-btn" id="reviewBtn" onclick="reviewIncorrect()" disabled></button><div class="review-note" id="reviewNote"></div>';
+  container.appendChild(bar);
+
+  document.getElementById('totalCount').textContent = totalQ;
+  scores.total = totalQ;
+  updateReviewBtn();
+  updateProgress();
+}
+
+function markCard(q, ok, html) {
+  answered[q.id] = true;
+  if (ok) scores.correct++; else missed[q.id] = true;
+  document.getElementById('card-' + q.id).classList.add(ok ? 'answered-correct' : 'answered-wrong');
+  const fb = document.getElementById('fb-' + q.id);
+  fb.className = 'feedback ' + (ok ? 'correct-fb' : 'wrong-fb') + ' show';
+  fb.innerHTML = html;
+  updateStats();
+}
+
+// ----- multiple choice -----
+function answerQ(q, chosen) {
+  if (answered[q.id]) return;
+  const ok = chosen === q.correct;
+  q.options.forEach((_, oi) => {
+    const btn = document.getElementById('opt-' + q.id + '-' + oi);
+    btn.disabled = true;
+    if (oi === q.correct) btn.classList.add(oi === chosen ? 'correct-ans' : 'reveal-correct');
+    else if (oi === chosen) btn.classList.add('wrong-ans');
+  });
+  const ans = `<strong>${letters[q.correct]}. ${esc(q.options[q.correct])}</strong>`;
+  markCard(q, ok, ok ? `<strong>✓ Correct!</strong> ${ans}` : `<strong>✗ Incorrect.</strong> The answer is ${ans}`);
+}
+function toggleOpt(q, oi) {
+  if (answered[q.id]) return;
+  const set = selected[q.id] || (selected[q.id] = new Set());
+  if (set.has(oi)) set.delete(oi); else set.add(oi);
+  document.getElementById('opt-' + q.id + '-' + oi).classList.toggle('selected', set.has(oi));
+  document.getElementById('check-' + q.id).disabled = set.size === 0;
+}
+function checkMulti(q) {
+  if (answered[q.id]) return;
+  const set = selected[q.id] || new Set();
+  const right = new Set(q.correct);
+  const ok = set.size === right.size && [...set].every(i => right.has(i));
+  q.options.forEach((_, oi) => {
+    const btn = document.getElementById('opt-' + q.id + '-' + oi);
+    btn.disabled = true;
+    btn.classList.remove('selected');
+    if (right.has(oi)) btn.classList.add(set.has(oi) ? 'correct-ans' : 'reveal-correct');
+    else if (set.has(oi)) btn.classList.add('wrong-ans');
+  });
+  document.getElementById('check-' + q.id).style.display = 'none';
+  const ans = q.correct.map(i => `<strong>${letters[i]}. ${esc(q.options[i])}</strong>`).join(', ');
+  markCard(q, ok, ok ? `<strong>✓ Correct!</strong> ${ans}` : `<strong>✗ Incorrect.</strong> The correct answers are ${ans}`);
+}
+
+// ----- typed -----
+function submitTyped(q) {
+  if (answered[q.id]) return;
+  const input = document.getElementById('in-' + q.id);
+  if (!input.value.trim()) { input.focus(); return; }
+  finishTyped(q, isCorrect(q, input.value), input.value.trim());
+}
+function revealQ(q) {
+  if (answered[q.id]) return;
+  finishTyped(q, false, document.getElementById('in-' + q.id).value.trim());
+}
+function finishTyped(q, ok, typed) {
+  const input = document.getElementById('in-' + q.id);
+  input.disabled = true;
+  if (!typed) input.placeholder = 'No answer given';
+  input.classList.add(ok ? 'in-correct' : typed ? 'in-wrong' : 'in-blank');
+  if (!ok) input.blur();
+  document.getElementById('check-' + q.id).style.display = 'none';
+  document.getElementById('show-' + q.id).style.display = 'none';
+  const ans = `<strong>${esc(q.typed.show)}</strong>`;
+  markCard(q, ok, ok ? `<strong>✓ Correct!</strong> ${ans}`
+    : `<strong>✗ Incorrect.</strong> The answer is ${ans}` + (typed ? ` <button class="override-btn" type="button">Count as correct</button>` : ''));
+  const ob = document.querySelector('#fb-' + q.id + ' .override-btn');
+  if (ob) ob.addEventListener('click', () => overrideQ(q));
+}
+// For when your wording was right but didn't match the answer key.
+function overrideQ(q) {
+  if (!missed[q.id]) return;
+  delete missed[q.id];
+  scores.correct++;
+  document.getElementById('card-' + q.id).classList.replace('answered-wrong', 'answered-correct');
+  document.getElementById('in-' + q.id).classList.replace('in-wrong', 'in-correct');
+  const fb = document.getElementById('fb-' + q.id);
+  fb.className = 'feedback correct-fb show';
+  fb.innerHTML = `<strong>✓ Counted as correct.</strong> <strong>${esc(q.typed.show)}</strong>`;
+  updateStats();
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function updateStats() {
+  document.getElementById('answeredCount').textContent = Object.keys(answered).length;
+  document.getElementById('scoreCount').textContent = scores.correct;
+  updateReviewBtn();
+  updateProgress();
+}
+function updateProgress() {
+  const pct = scores.total ? (Object.keys(answered).length / scores.total * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+function updateReviewBtn() {
+  const btn = document.getElementById('reviewBtn');
+  if (!btn) return;
+  const n = Object.keys(missed).length;
+  btn.disabled = n === 0;
+  btn.textContent = n ? `Review incorrect answers (${n})` : 'Review incorrect answers';
+  document.getElementById('reviewNote').textContent = n ? '' : 'Questions you miss will show up here to retry.';
+}
+
+function reviewIncorrect() {
+  if (!Object.keys(missed).length) return;
+  if (!reviewing) fullView = view;
+  view = view
+    .map((sec, si) => ({ label: sec.label, num: sec.num || si + 1, questions: sec.questions.filter(q => missed[q.id]) }))
+    .filter(sec => sec.questions.length);
+  reviewing = true;
+  resetAll();
+}
+function exitReview() {
+  view = fullView;
+  reviewing = false;
+  resetAll();
+}
+
+function shuffled(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+// Shuffle question order within each set and answer-choice order within each question.
+// Each choice keeps its original index, so the correct answer(s) are remapped exactly.
+function shuffleAll() {
+  reviewing = false;
+  view = sections.map(sec => ({
+    label: sec.label,
+    questions: shuffled(sec.questions).map(q => {
+      const order = shuffled(q.options.map((_, i) => i));
+      const correct = q.multi
+        ? q.correct.map(c => order.indexOf(c)).sort((a, b) => a - b)
+        : order.indexOf(q.correct);
+      return Object.assign({}, q, { options: order.map(i => q.options[i]), correct });
+    })
+  }));
+  fullView = view;
+  resetAll();
+}
+
+function resetAll() {
+  answered = {};
+  selected = {};
+  missed = {};
+  scores.correct = 0;
+  updateStats();
+  buildExam();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+syncModeButtons();
+buildExam();
+</script>
+</body>
+</html>
